@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <title>Calculator</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #000;
+            padding: 0;
+            font-family: 'Montserrat';
+            font-size: xx-large;
+        }
+        #cal-container{
+            display: grid;
+            margin: auto;
+            width: 100%;
+            grid-template-columns: 25% 25% 25% 25%;
+            grid-template-rows: auto auto auto auto;
+            border-radius: 2rem;
+            background-color: #222;
+        }
+
+        #cal-input{
+            background-color: #444;
+            /* border-bottom: 2rem solid #222; */
+            border-radius: 2rem;
+            color: #ddd;
+            height: 12rem;
+            padding: 2rem;
+            grid-column-start: 1;
+            grid-column-end: 5;
+            word-wrap: break-word;
+            text-align: right;
+        }
+
+        .button{
+            border: 3px solid #222;
+            background-color: #222;
+            color: #fff;
+            padding: 1.5rem 0rem;
+            text-align: center;
+        }
+
+        .button:active{
+            background-color: #ddd;
+            color: #222;
+        }
+
+        #allclear{
+            border-radius: 2rem 0rem 0rem 2rem;
+        }
+        #clear{
+            border-radius: 0rem 2rem 2rem 0rem;
+        }
+        #equals{
+            grid-column-start: 1;
+            grid-column-end: 3;
+            border-radius: 2rem;
+        }
+        #one{
+            border-radius: 0rem 0rem 0rem 2rem;
+        } 
+        #zero{
+            border-radius: 0rem 0rem 2rem 2rem;
+        }
+        #seven{
+            border-radius: 2rem 0rem 0rem 0rem;
+        }
+        #nine{
+            border-radius: 0rem 2rem 0rem 0rem;
+        }
+        #divide{
+            border-radius: 2rem 2rem 0rem 0rem;
+        }
+        #add{
+            border-radius: 0rem 0rem 2rem 2rem;
+        }
+        #parenthesis, #dot{
+            border-radius: 2rem;
+        }
+
+        .highlight{
+            background-color: #333;
+        }
+
+        @media screen and (min-width: 700px) {
+            #cal-container{
+                width: 60%;
+            }
+            .button:hover{
+                background-color: #555;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="cal-container">
+        <div id="cal-input"></div>
+
+        <div class="button" id="allclear">AC</div>
+        <div class="button" id="clear">C</div>
+        <div class="button" id="parenthesis">()</div>
+        <div class="button" id="divide">/</div>
+        
+        <div class="button highlight" id="seven">7</div>
+        <div class="button highlight" id="eight">8</div>
+        <div class="button highlight" id="nine">9</div>
+        <div class="button" id="multiply">x</div>
+        
+        <div class="button highlight" id="four">4</div>
+        <div class="button highlight" id="five">5</div>
+        <div class="button highlight" id="six">6</div>
+        <div class="button" id="subtract">-</div>
+        
+        <div class="button highlight" id="one">1</div>
+        <div class="button highlight" id="two">2</div>
+        <div class="button highlight" id="three">3</div>
+        <div class="button" id="add">+</div>   
+        
+        
+        <div class="button highlight" id="equals">=</div>
+        <div class="button highlight" id="zero">0</div>
+        <div class="button" id="dot">.</div>
+    </div>
+    <script>
+        let inputMem = "";
+        let parenthesisMem = 0;
+        let dotMem = 0;
+
+        function appendNum(num) {
+            console.log(`${inputMem.length} = ${inputMem}`);
+
+            if(inputMem.length > 50) {
+                document.getElementById("cal-input").innerText = `Enough!`;
+            } else {
+                inputMem += num;
+                document.getElementById("cal-input").innerText = inputMem;
+            }
+        }
+
+        function appendOp(op) {
+            console.log(`${op}`);
+
+            if(inputMem.length > 50) {
+                document.getElementById("cal-input").innerText = `Enough!`;
+            } else {
+                if(inputMem.length == 0){
+                    if(op == "/") {}
+                    else if(op == "*") {}
+                    else if(op == ".") {
+                        inputMem += `0${op}`;
+                    } else {
+                        inputMem += op;                
+                    }
+                } else if(inputMem.length == 1){
+                    if((inputMem[inputMem.length-1] == "-" || inputMem[inputMem.length-1] == "+") &&
+                        (op == "-" || op == "+")) {
+                        inputMem = op;
+                    } else {
+                        
+                        inputMem += op;                
+                    }
+                } else {
+                    if(inputMem[inputMem.length-1] == "/" || inputMem[inputMem.length-1] == "*") {
+                        if(op == "-" || op == "+") {
+                            inputMem += op;                    
+                        } else if(op == "."){
+                            inputMem += `0${op}`;    
+                        }
+                    } else if(inputMem[inputMem.length-1] == "-") {}
+                    else if(inputMem[inputMem.length-1] == "+") {}
+                    else if(inputMem[inputMem.length-1] == ".") {
+                        inputMem += `0${op}`;
+                    }
+                    else {
+                        inputMem += op;
+                        // dotMem--;
+                        // if(dotMem == 0) {
+                        //     inputMem += op;
+                        // }
+                    }
+                }
+                document.getElementById("cal-input").innerText = inputMem;
+            }
+            console.log(`${inputMem.length} = ${inputMem}`);
+        }
+
+        document.getElementById("zero").onclick = function() {appendNum("0");};
+
+        document.getElementById("one").onclick = function() {appendNum("1");};
+
+        document.getElementById("two").onclick = function() {appendNum("2");};
+
+        document.getElementById("three").onclick = function() {appendNum("3");};
+
+        document.getElementById("four").onclick = function() {appendNum("4");};
+
+        document.getElementById("five").onclick = function() {appendNum("5");};
+
+        document.getElementById("six").onclick = function() {appendNum("6");};
+
+        document.getElementById("seven").onclick = function() {appendNum("7");};
+
+        document.getElementById("eight").onclick = function() {appendNum("8");};
+
+        document.getElementById("nine").onclick = function() {appendNum("9");};
+
+
+        document.getElementById("divide").onclick = function() {appendOp("/");};
+            
+        document.getElementById("multiply").onclick = function() {appendOp("*");};
+
+        document.getElementById("subtract").onclick = function() {appendOp("-");};
+
+        document.getElementById("add").onclick = function() {appendOp("+");};
+
+        document.getElementById("dot").onclick = function() {appendOp(".");};
+
+
+        document.getElementById("parenthesis").onclick = function() {
+            console.log(`${inputMem.length} = ${inputMem}`);
+
+            if(inputMem.indexOf("(") == -1 && inputMem.length == 0) {
+                parenthesisMem++;
+                inputMem += "(";
+            }else if(inputMem.indexOf("(") == -1) {
+                parenthesisMem++;
+                inputMem += "(";
+            }else if(inputMem.indexOf("(") != -1){
+                if(inputMem[inputMem.length - 1] != "(" && parenthesisMem > 0) {
+                    parenthesisMem--;
+                    inputMem += ")";
+                } else {
+                    parenthesisMem++;
+                    inputMem += "(";   
+                }
+            }
+            document.getElementById("cal-input").innerText = inputMem;
+            // if(inputMem.indexOf("(") == -1 && inputMem.length == 0) {
+            //     parenthesisMem++;
+            //     inputMem += "(";
+            // }else if(inputMem.indexOf("(") == -1) {
+            //     if(inputMem[inputMem.length - 1] == "-" || inputMem[inputMem.length - 1] == "+"){
+            //         parenthesisMem++;
+            //         inputMem += "(";
+            //     } else {
+            //         parenthesisMem++;
+            //         inputMem += "*(";
+            //     }
+            // }else if(inputMem.indexOf("(") != -1){
+            //     if(inputMem[inputMem.length - 1] != "(" && parenthesisMem > 0) {
+            //         parenthesisMem--;
+            //         inputMem += ")";
+            //     } else {
+            //         if(inputMem[inputMem.length - 1] == "-" || inputMem[inputMem.length - 1] == "+"){
+            //             parenthesisMem++;
+            //             inputMem += "(";
+            //         } else {
+            //             parenthesisMem++;
+            //             inputMem += "*(";
+            //         }   
+            //     }
+            // }
+        };
+        
+        document.getElementById("allclear").onclick = function() {
+            inputMem = "";
+            document.getElementById("cal-input").innerText = inputMem;
+            console.clear();
+        };
+
+        document.getElementById("clear").onclick = function() {
+            inputMem = inputMem.slice(0, inputMem.length - 1);
+            document.getElementById("cal-input").innerText = inputMem;
+        };
+            
+        document.getElementById("equals").onclick = function() {
+            if(inputMem.length != 0) {
+                try{
+                    document.getElementById("cal-input").innerText = `= ${eval(inputMem)}`;
+                    inputMem = `${eval(inputMem)}`;
+                } catch(err) {
+                    document.getElementById("cal-input").innerText = `Invalid format`;
+                    inputMem = "";
+                    // setTimeout(function(){
+                    //     document.getElementById("cal-input").innerText = "";
+                    // },2000);
+                }
+            } else {
+                document.getElementById("cal-input").innerText = `Put something here`;
+            }
+        };         
+    </script>
+</body>
+</html>

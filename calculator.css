@@ -1,0 +1,90 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    background-color: #000;
+    padding: 0;
+    font-family: 'Montserrat';
+    font-size: xx-large;
+}
+#cal-container{
+    display: grid;
+    margin: auto;
+    width: 100%;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: auto auto auto auto;
+    border-radius: 2rem;
+    background-color: #222;
+}
+
+#cal-input{
+    background-color: #444;
+    /* border-bottom: 2rem solid #222; */
+    border-radius: 2rem;
+    color: #ddd;
+    height: 12rem;
+    padding: 2rem;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    word-wrap: break-word;
+    text-align: right;
+}
+
+.button{
+    border: 3px solid #222;
+    background-color: #222;
+    color: #fff;
+    padding: 1.5rem 0rem;
+    text-align: center;
+}
+
+.button:active{
+    background-color: #ddd;
+    color: #222;
+}
+
+#allclear{
+    border-radius: 2rem 0rem 0rem 2rem;
+}
+#clear{
+    border-radius: 0rem 2rem 2rem 0rem;
+}
+#equals{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    border-radius: 2rem;
+}
+#one{
+    border-radius: 0rem 0rem 0rem 2rem;
+} 
+#zero{
+    border-radius: 0rem 0rem 2rem 2rem;
+}
+#seven{
+    border-radius: 2rem 0rem 0rem 0rem;
+}
+#nine{
+    border-radius: 0rem 2rem 0rem 0rem;
+}
+#divide{
+    border-radius: 2rem 2rem 0rem 0rem;
+}
+#add{
+    border-radius: 0rem 0rem 2rem 2rem;
+}
+#parenthesis, #dot{
+    border-radius: 2rem;
+}
+
+.highlight{
+    background-color: #333;
+}
+
+@media screen and (min-width: 700px) {
+    #cal-container{
+        width: 60%;
+    }
+    .button:hover{
+        background-color: #555;
+    }
+}
